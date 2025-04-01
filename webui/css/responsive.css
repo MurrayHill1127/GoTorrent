@@ -1,0 +1,44 @@
+/* css/responsive.css */
+
+/**
+ * Responsive.css - 响应式设计，适配不同屏幕尺寸
+ */
+
+@media (max-width: 768px) {
+    header .container, main .container, footer .container {
+        padding: 10px;
+    }
+    .nav-list {
+        flex-direction: column;
+        align-items: center;
+    }
+    .nav-list li {
+        margin-bottom: 10px;
+    }
+    .about-container, .settings-container {
+        width: 95%;
+    }
+    .team {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    header .logo h1 {
+        font-size: 24px;
+    }
+    .about-header h1 {
+        font-size: 28px;
+    }
+    .about-header p {
+        font-size: 14px;
+    }
+    .settings-group h2, .about-section h2 {
+        font-size: 20px;
+    }
+    .btn {
+        font-size: 14px;
+    }
+}
+

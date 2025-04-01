@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoTorrent Web UI - Progress</title>
+    <!-- 引入全局及页面样式 -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/extra.css">
+    <!-- 页面内嵌额外样式 -->
+    <style>
+        /* 图表容器样式 */
+        #chartSection {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        #chartSection h2 {
+            margin-bottom: 20px;
+        }
+        /* 数据统计区域 */
+        #statsSection {
+            margin-top: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .stat-block {
+            flex: 0 0 32%;
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        .stat-block h3 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #333;
+        }
+        .stat-block p {
+            font-size: 14px;
+            color: #555;
+        }
+        /* 实时更新日志 */
+        #logSection {
+            margin-top: 40px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 6px;
+            max-height: 300px;
+            overflow-y: scroll;
+        }
+        #logSection h2 {
+            margin-bottom: 15px;
+        }
+        #logSection pre {
+            font-size: 13px;
+            color: #444;
+            line-height: 1.5;
+        }
+        /* 调试区域 */
+        #debugSection {
+            margin-top: 40px;
+            background-color: #eef;
+            border: 1px solid #99c;
+            padding: 15px;
+            border-radius: 6px;
+        }
+        #debugSection h2 {
+            margin-bottom: 10px;
+        }
+        #debugSection p {
+            font-size: 13px;
+            color: #336;
+        }
+    </style>
+    <!-- 引入 Chart.js 库 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- 页面全局 JS -->
+    <script src="js/app.js" defer></script>
+    <!-- 下载进度页面专用 JS -->
+    <script src="js/progress.js" defer></script>
+    <!-- 页面描述 -->
+    <meta name="description" content="Real-time download progress and statistics for GoTorrent downloads.">
+</head>
+<body>
+    <!-- 页头区域 -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="assets/images/logo.png" alt="GoTorrent Logo">
+                <h1>Download Progress</h1>
+            </div>
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="downloads.html">Downloads</a></li>
+                    <li><a href="progress.html" class="active">Progress</a></li>
+                    <li><a href="settings.html">Settings</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主体内容区域 -->
+    <main>
+        <div class="container">
+            <!-- 图表显示区 -->
+            <section id="chartSection">
+                <h2>Download Progress Chart</h2>
+                <canvas id="progressChart" width="800" height="400"></canvas>
+                <p>Below is a chart displaying real-time download progress for your active downloads. The data is updated every few seconds.</p>
+            </section>
+
+            <!-- 数据统计区 -->
+            <section id="statsSection">
+                <div class="stat-block">
+                    <h3>Total Downloads</h3>
+                    <p id="totalDownloads">0</p>
+                </div>
+                <div class="stat-block">
+                    <h3>Completed Downloads</h3>
+                    <p id="completedDownloads">0</p>
+                </div>
+                <div class="stat-block">
+                    <h3>Average Speed</h3>
+                    <p id="averageSpeed">0 MB/s</p>
+                </div>
+                <div class="stat-block">
+                    <h3>Active Peers</h3>
+                    <p id="activePeers">0</p>
+                </div>
+                <div class="stat-block">
+                    <h3>Estimated Time Left</h3>
+                    <p id="estimatedTime">--:--:--</p>
+                </div>
+                <div class="stat-block">
+                    <h3>Error Count</h3>
+                    <p id="errorCount">0</p>
+                </div>
+            </section>
+
+            <!-- 实时日志区 -->
+            <section id="logSection">
+                <h2>Real-Time Log</h2>
+                <pre id="logContent">
+[00:00:00] Initializing download progress monitoring...
+[00:00:05] Download task #1 started.
+[00:00:10] Connected to 12 peers.
+[00:00:15] Download progress for task #1: 10%
+[00:00:20] Download progress for task #1: 20%
+                </pre>
+            </section>
+
+            <!-- 调试信息区 -->
+            <section id="debugSection">
+                <h2>Debug Information</h2>
+                <p id="debugInfo">No debug information available at this time.</p>
+                <p>Use the console (F12) for additional logs and details regarding the progress updates and error handling.</p>
+                <p>Ensure that the connection to the download server is stable for real-time updates.</p>
+                <p>If errors occur, they will be logged in both the debug section and the browser console.</p>
+            </section>
+        </div>
+    </main>
+
+    <!-- 页脚区域 -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a> | 
+                <a href="downloads.html">Downloads</a> | 
+                <a href="progress.html">Progress</a> | 
+                <a href="settings.html">Settings</a> | 
+                <a href="about.html">About</a>
+            </div>
+            <div class="footer-info">
+                <p>&copy; 2025 GoTorrent. All rights reserved.</p>
+                <p>Powered by GoTorrent's advanced P2P engine and modern web technologies.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 内联脚本，用于记录页面加载情况 -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log("Progress page loaded successfully at " + new Date().toLocaleTimeString());
+        });
+    </script>
+</body>
+</html>
+

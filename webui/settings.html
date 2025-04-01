@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- 基本信息 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoTorrent Web UI - Settings</title>
+    
+    <!-- 引入全局样式 -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/extra.css">
+    
+    <!-- 页面内嵌额外样式 -->
+    <style>
+        /* 设置页面主容器样式 */
+        .settings-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fdfdfd;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        /* 设置标题样式 */
+        .settings-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .settings-header h1 {
+            font-size: 32px;
+            margin: 0;
+            color: #333;
+        }
+        .settings-header p {
+            font-size: 16px;
+            color: #666;
+        }
+        /* 分组区域 */
+        .settings-group {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+        }
+        .settings-group h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #444;
+        }
+        /* 表单标签和控件 */
+        .settings-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .settings-group input[type="text"],
+        .settings-group input[type="number"],
+        .settings-group input[type="password"],
+        .settings-group select,
+        .settings-group textarea {
+            width: 100%;
+            padding: 8px 10px;
+            margin-bottom: 15px;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #333;
+        }
+        .settings-group input[type="checkbox"],
+        .settings-group input[type="radio"] {
+            margin-right: 10px;
+        }
+        .settings-group .option-desc {
+            font-size: 12px;
+            color: #888;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+        /* 按钮样式 */
+        .btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        /* 额外说明区域 */
+        .settings-info {
+            font-size: 13px;
+            color: #555;
+            margin-top: 10px;
+            border-left: 4px solid #ccc;
+            padding-left: 10px;
+        }
+    </style>
+    
+    <!-- 页面描述 -->
+    <meta name="description" content="Configuration and settings for GoTorrent, including network, download preferences, and advanced options.">
+    
+    <!-- 页面全局 JS -->
+    <script src="js/app.js" defer></script>
+    <!-- 设置页面专用 JS -->
+    <script src="js/settings.js" defer></script>
+</head>
+<body>
+    <!-- 页头区域 -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="assets/images/logo.png" alt="GoTorrent Logo">
+                <h1>GoTorrent Settings</h1>
+            </div>
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="downloads.html">Downloads</a></li>
+                    <li><a href="progress.html">Progress</a></li>
+                    <li><a href="settings.html" class="active">Settings</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- 主体内容区域 -->
+    <main>
+        <div class="container settings-container">
+            <!-- 页面头部说明 -->
+            <div class="settings-header">
+                <h1>Application Settings</h1>
+                <p>Configure your download preferences, network settings, UI themes, and advanced options below.</p>
+            </div>
+            
+            <!-- 网络设置分组 -->
+            <div class="settings-group" id="networkSettings">
+                <h2>Network Settings</h2>
+                <!-- 代理设置 -->
+                <label for="proxyAddress">Proxy Address</label>
+                <input type="text" id="proxyAddress" name="proxyAddress" placeholder="e.g. http://proxy.example.com:8080">
+                <div class="option-desc">Specify the proxy server to use for downloads (optional).</div>
+                
+                <!-- 超时时间 -->
+                <label for="timeout">Connection Timeout (seconds)</label>
+                <input type="number" id="timeout" name="timeout" value="30" min="5" max="120">
+                <div class="option-desc">Set the maximum time to wait for connections before timing out.</div>
+                
+                <!-- 启用IPv6 -->
+                <label for="enableIPv6">Enable IPv6</label>
+                <input type="checkbox" id="enableIPv6" name="enableIPv6">
+                <div class="option-desc">Check to enable IPv6 connectivity for downloads.</div>
+            </div>
+            
+            <!-- 下载设置分组 -->
+            <div class="settings-group" id="downloadSettings">
+                <h2>Download Settings</h2>
+                <!-- 下载目录 -->
+                <label for="downloadPath">Download Directory</label>
+                <input type="text" id="downloadPath" name="downloadPath" placeholder="/path/to/downloads">
+                <div class="option-desc">Specify the default folder where downloaded files will be saved.</div>
+                
+                <!-- 最大下载速度 -->
+                <label for="maxDownloadSpeed">Max Download Speed (KB/s)</label>
+                <input type="number" id="maxDownloadSpeed" name="maxDownloadSpeed" value="1024" min="0">
+                <div class="option-desc">Set 0 for unlimited speed.</div>
+                
+                <!-- 最大上传速度 -->
+                <label for="maxUploadSpeed">Max Upload Speed (KB/s)</label>
+                <input type="number" id="maxUploadSpeed" name="maxUploadSpeed" value="256" min="0">
+                <div class="option-desc">Set 0 for unlimited speed.</div>
+                
+                <!-- 同时下载任务数 -->
+                <label for="maxDownloads">Concurrent Downloads</label>
+                <input type="number" id="maxDownloads" name="maxDownloads" value="3" min="1" max="10">
+                <div class="option-desc">Define how many downloads can run concurrently.</div>
+            </div>
+            
+            <!-- 高级设置分组 -->
+            <div class="settings-group" id="advancedSettings">
+                <h2>Advanced Settings</h2>
+                <!-- 日志级别 -->
+                <label for="logLevel">Log Level</label>
+                <select id="logLevel" name="logLevel">
+                    <option value="debug">Debug</option>
+                    <option value="info" selected>Info</option>
+                    <option value="warn">Warning</option>
+                    <option value="error">Error</option>
+                    <option value="none">None</option>
+                </select>
+                <div class="option-desc">Select the amount of logging details to display.</div>
+                
+                <!-- 是否启用加密 -->
+                <label for="enableEncryption">Enable Encryption</label>
+                <input type="checkbox" id="enableEncryption" name="enableEncryption" checked>
+                <div class="option-desc">Toggle encryption for peer-to-peer communications.</div>
+                
+                <!-- 数据缓存大小 -->
+                <label for="cacheSize">Cache Size (MB)</label>
+                <input type="number" id="cacheSize" name="cacheSize" value="128" min="16" max="1024">
+                <div class="option-desc">Set the memory allocated for caching downloaded data.</div>
+                
+                <!-- 备用服务器 -->
+                <label for="backupServer">Backup Server URL</label>
+                <input type="text" id="backupServer" name="backupServer" placeholder="http://backup.example.com">
+                <div class="option-desc">In case of connectivity issues, use this server as a fallback.</div>
+                
+                <!-- 自定义参数 -->
+                <label for="customParams">Custom Parameters</label>
+                <textarea id="customParams" name="customParams" rows="4" placeholder="Enter any custom parameters here..."></textarea>
+                <div class="option-desc">These parameters will be passed directly to the downloader.</div>
+            </div>
+            
+            <!-- 用户界面设置分组 -->
+            <div class="settings-group" id="uiSettings">
+                <h2>User Interface Settings</h2>
+                <!-- 主题选择 -->
+                <label for="themeSelect">Theme</label>
+                <select id="themeSelect" name="themeSelect">
+                    <option value="light" selected>Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="blue">Blue</option>
+                    <option value="custom">Custom</option>
+                </select>
+                <div class="option-desc">Choose a color theme for the application interface.</div>
+                
+                <!-- 字体大小 -->
+                <label for="fontSize">Font Size (px)</label>
+                <input type="number" id="fontSize" name="fontSize" value="14" min="10" max="24">
+                <div class="option-desc">Adjust the base font size for the UI.</div>
+                
+                <!-- 显示动画 -->
+                <label for="enableAnimations">Enable Animations</label>
+                <input type="checkbox" id="enableAnimations" name="enableAnimations" checked>
+                <div class="option-desc">Toggle UI animations and transitions.</div>
+            </div>
+            
+            <!-- 保存设置按钮区域 -->
+            <div class="settings-group" id="saveSettingsGroup">
+                <h2>Save Settings</h2>
+                <p class="settings-info">After making changes, click the button below to save your settings. You can also reset to default values if needed.</p>
+                <button class="btn" id="saveSettings">Save Settings</button>
+                <button class="btn" id="resetSettings">Reset to Defaults</button>
+                <div id="saveStatus" class="status-message"></div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 页脚区域 -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a> | 
+                <a href="downloads.html">Downloads</a> | 
+                <a href="progress.html">Progress</a> | 
+                <a href="settings.html" class="active">Settings</a> | 
+                <a href="about.html">About</a>
+            </div>
+            <div class="footer-info">
+                <p>&copy; 2025 GoTorrent. All rights reserved.</p>
+                <p>Designed by MurrayHill1127.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- 内联脚本：初始化设置页面 -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log("Settings page loaded at " + new Date().toLocaleString());
+            // 模拟加载现有设置数据
+            // 此处可以通过 Ajax 从后端加载真实数据
+            document.getElementById("proxyAddress").value = "http://proxy.example.com:8080";
+            document.getElementById("timeout").value = 30;
+            document.getElementById("downloadPath").value = "/downloads";
+            document.getElementById("maxDownloadSpeed").value = 1024;
+            document.getElementById("maxUploadSpeed").value = 256;
+            document.getElementById("maxDownloads").value = 3;
+            document.getElementById("logLevel").value = "info";
+            document.getElementById("cacheSize").value = 128;
+            document.getElementById("themeSelect").value = "light";
+            document.getElementById("fontSize").value = 14;
+            
+            // 按钮事件处理
+            document.getElementById("saveSettings").addEventListener("click", function() {
+                // 模拟保存设置
+                document.getElementById("saveStatus").textContent = "Settings saved successfully!";
+                console.log("Settings have been saved.");
+            });
+            
+            document.getElementById("resetSettings").addEventListener("click", function() {
+                // 模拟重置设置
+                window.location.reload();
+            });
+        });
+    </script>
+</body>
+</html>
+

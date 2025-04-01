@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoTorrent Web UI - Downloads</title>
+    <!-- 全局及页面样式 -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/extra.css">
+    <!-- 页面专用样式 -->
+    <style>
+        /* 页面内嵌样式：额外调整下载页面的布局 */
+        #downloadsTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        #downloadsTable th, #downloadsTable td {
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+        }
+        #downloadsTable th {
+            background-color: #f8f8f8;
+            font-size: 16px;
+        }
+        #downloadsTable td {
+            font-size: 14px;
+        }
+        .action-buttons button {
+            margin-right: 8px;
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+        /* 分页部分 */
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .pagination a {
+            margin: 0 5px;
+            text-decoration: none;
+            color: #007bff;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+        }
+        .pagination a.active {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+        .pagination a:hover {
+            background-color: #e7e7e7;
+        }
+    </style>
+    <!-- 页面全局 JS -->
+    <script src="js/app.js" defer></script>
+    <!-- 下载页面专用 JS -->
+    <script src="js/downloads.js" defer></script>
+    <!-- 页面描述 -->
+    <meta name="description" content="Download queue and detailed status for GoTorrent downloads.">
+</head>
+<body>
+    <!-- 页头 -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="assets/images/logo.png" alt="GoTorrent Logo">
+                <h1>GoTorrent Downloads</h1>
+            </div>
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="downloads.html" class="active">Downloads</a></li>
+                    <li><a href="progress.html">Progress</a></li>
+                    <li><a href="settings.html">Settings</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主体区域 -->
+    <main>
+        <div class="container">
+            <section id="downloadStatus">
+                <h2>Download Queue</h2>
+                <p>This page displays the list of active and pending downloads. You can view details such as file name, status, progress, download speed, and available actions for each download task.</p>
+                <!-- 下载表格 -->
+                <table id="downloadsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>File Name</th>
+                            <th>Status</th>
+                            <th>Progress</th>
+                            <th>Speed</th>
+                            <th>Peers</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 这里的行由 JS 动态生成 -->
+                        <tr>
+                            <td>1</td>
+                            <td>Ubuntu-20.04.iso</td>
+                            <td>Downloading</td>
+                            <td>45%</td>
+                            <td>1.2 MB/s</td>
+                            <td>12</td>
+                            <td class="action-buttons">
+                                <button onclick="pauseDownload(1)">Pause</button>
+                                <button onclick="resumeDownload(1)">Resume</button>
+                                <button onclick="cancelDownload(1)">Cancel</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Debian-11.iso</td>
+                            <td>Paused</td>
+                            <td>30%</td>
+                            <td>0 MB/s</td>
+                            <td>8</td>
+                            <td class="action-buttons">
+                                <button onclick="pauseDownload(2)">Pause</button>
+                                <button onclick="resumeDownload(2)">Resume</button>
+                                <button onclick="cancelDownload(2)">Cancel</button>
+                            </td>
+                        </tr>
+                        <!-- 示例结束 -->
+                    </tbody>
+                </table>
+
+                <!-- 分页控件 -->
+                <div class="pagination">
+                    <a href="#">&laquo;</a>
+                    <a href="#" class="active">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <a href="#">5</a>
+                    <a href="#">&raquo;</a>
+                </div>
+            </section>
+
+            <!-- 下载详细信息区域 -->
+            <section id="downloadDetails">
+                <h2>Download Details</h2>
+                <div class="details-container">
+                    <!-- 详情标签页 -->
+                    <ul class="tab-list">
+                        <li class="active" data-tab="overview">Overview</li>
+                        <li data-tab="log">Download Log</li>
+                        <li data-tab="peers">Connected Peers</li>
+                        <li data-tab="files">File List</li>
+                    </ul>
+                    <!-- 详情内容 -->
+                    <div class="tab-content">
+                        <div id="overview" class="tab-pane active">
+                            <p>Overview information will be displayed here, including file size, total pieces, and estimated remaining time.</p>
+                            <ul>
+                                <li><strong>File Name:</strong> Ubuntu-20.04.iso</li>
+                                <li><strong>File Size:</strong> 2.5 GB</li>
+                                <li><strong>Total Pieces:</strong> 3000</li>
+                                <li><strong>Downloaded Pieces:</strong> 1350</li>
+                                <li><strong>Remaining Time:</strong> 45 minutes</li>
+                            </ul>
+                        </div>
+                        <div id="log" class="tab-pane">
+                            <p>Download log will appear here.</p>
+                            <pre>
+[10:15:23] Starting download...
+[10:15:30] Connected to 12 peers.
+[10:16:00] Download progress: 25%
+[10:16:30] Download progress: 30%
+[10:17:00] Peer 192.168.1.100 disconnected.
+                            </pre>
+                        </div>
+                        <div id="peers" class="tab-pane">
+                            <p>List of connected peers:</p>
+                            <ul>
+                                <li>Peer 1 - IP: 192.168.1.100 - Speed: 1.2 MB/s</li>
+                                <li>Peer 2 - IP: 192.168.1.101 - Speed: 800 KB/s</li>
+                                <li>Peer 3 - IP: 192.168.1.102 - Speed: 1.0 MB/s</li>
+                                <li>Peer 4 - IP: 192.168.1.103 - Speed: 950 KB/s</li>
+                            </ul>
+                        </div>
+                        <div id="files" class="tab-pane">
+                            <p>Files included in the torrent:</p>
+                            <ol>
+                                <li>ubuntu-20.04-desktop-amd64.iso (2.5 GB)</li>
+                                <li>checksum.txt (5 KB)</li>
+                                <li>readme.txt (10 KB)</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 备用信息区域（可扩展） -->
+            <section id="extraInfo">
+                <h2>Additional Information</h2>
+                <p>This section can be used to display any additional information about downloads, such as network statistics, overall system performance, or alerts.</p>
+                <div class="extra-grid">
+                    <div class="extra-item">
+                        <h3>Network Stats</h3>
+                        <p>Upload: 500 KB/s<br>Download: 1.2 MB/s</p>
+                    </div>
+                    <div class="extra-item">
+                        <h3>System Performance</h3>
+                        <p>CPU Usage: 45%<br>Memory Usage: 60%</p>
+                    </div>
+                    <div class="extra-item">
+                        <h3>Alerts</h3>
+                        <p>No alerts at this moment.</p>
+                    </div>
+                    <div class="extra-item">
+                        <h3>Version Info</h3>
+                        <p>GoTorrent v1.0.0<br>Build Date: 2025-04-01</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a> | 
+                <a href="downloads.html">Downloads</a> | 
+                <a href="progress.html">Progress</a> | 
+                <a href="settings.html">Settings</a> | 
+                <a href="about.html">About</a>
+            </div>
+            <div class="footer-info">
+                <p>&copy; 2025 GoTorrent. All rights reserved.</p>
+                <p>Designed and developed by Your Name.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 内联脚本，用于处理选项卡切换 -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const tabs = document.querySelectorAll(".tab-list li");
+            const panes = document.querySelectorAll(".tab-pane");
+            tabs.forEach(tab => {
+                tab.addEventListener("click", function() {
+                    tabs.forEach(t => t.classList.remove("active"));
+                    panes.forEach(p => p.classList.remove("active"));
+                    tab.classList.add("active");
+                    document.getElementById(tab.getAttribute("data-tab")).classList.add("active");
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+

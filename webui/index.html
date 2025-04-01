@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoTorrent Web UI - Home</title>
+    <!-- 全局样式 -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/extra.css">
+    <!-- 描述和关键词 -->
+    <meta name="description" content="GoTorrent Web UI - A feature-rich torrent client with multi-page interface.">
+    <meta name="keywords" content="torrent, download, GoTorrent, Web UI, peer-to-peer">
+    <!-- Favicons -->
+    <link rel="icon" href="assets/images/logo.png" type="image/png">
+    <!-- 外部字体 -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+    <!-- 全局 JS -->
+    <script src="js/app.js" defer></script>
+</head>
+<body>
+    <!-- 页头区域 -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="assets/images/logo.png" alt="GoTorrent Logo">
+                <h1>GoTorrent</h1>
+            </div>
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="downloads.html">Downloads</a></li>
+                    <li><a href="progress.html">Progress</a></li>
+                    <li><a href="settings.html">Settings</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero">
+            <div class="container">
+                <h2>Welcome to GoTorrent</h2>
+                <a href="downloads.html" class="btn">View Downloads</a>
+            </div>
+        </section>
+
+        <!-- 功能介绍区 -->
+        <section id="features">
+            <div class="container">
+                <h2>Features</h2>
+                <div class="features-grid">
+                    <div class="feature">
+                        <h3>Multi-Page Interface</h3>
+                        <p>Navigate through several pages including Home, Downloads, Progress, Settings, and About.</p>
+                    </div>
+                    <div class="feature">
+                        <h3>Real-Time Progress</h3>
+                        <p>Monitor your download status with live updates and detailed charts.</p>
+                    </div>
+                    <div class="feature">
+                        <h3>User-Friendly</h3>
+                        <p>A modern design with responsive layouts for desktops, tablets, and mobile devices.</p>
+                    </div>
+                    <div class="feature">
+                        <h3>Extensible and Modular</h3>
+                        <p>Easily add new features and modules as your needs grow.</p>
+                    </div>
+                    <div class="feature">
+                        <h3>Secure and Fast</h3>
+                        <p>Optimized for performance and security with modern web technologies.</p>
+                    </div>
+                    <div class="feature">
+                        <h3>Interactive UI</h3>
+                        <p>Enjoy dynamic content, animations, and smooth transitions across pages.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 用户推荐区 -->
+        <section id="testimonials">
+            <div class="container">
+                <h2>Testimonials</h2>
+                <div class="testimonial">
+                    <p>"GoTorrent is by far the best torrent client I've used! The UI is modern and intuitive."</p>
+                    <span>- User A</span>
+                </div>
+                <div class="testimonial">
+                    <p>"Real-time progress updates and detailed charts make monitoring downloads a breeze."</p>
+                    <span>- User B</span>
+                </div>
+                <div class="testimonial">
+                    <p>"A highly recommended client for anyone serious about torrenting and download management."</p>
+                    <span>- User C</span>
+                </div>
+                <div class="testimonial">
+                    <p>"The modular design allowed me to extend its functionalities without hassle."</p>
+                    <span>- User D</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 联系我们区 -->
+        <section id="contact">
+            <div class="container">
+                <h2>Contact Us</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" placeholder="MurrayHill1127" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" placeholder="MurrayHill1127@gmail.com" required>
+                    </div>
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+                <div id="contactStatus" class="status-message"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚区域 -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="about.html">About</a> | 
+                <a href="settings.html">Settings</a> | 
+                <a href="downloads.html">Downloads</a> | 
+                <a href="progress.html">Progress</a>
+            </div>
+            <div class="footer-info">
+                <p>&copy; 2025 GoTorrent. All rights reserved.</p>
+                <p>Designed by MurrayHill1127.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 内联额外脚本 -->
+    <script>
+        // 初始化页面日志
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log("Index page loaded successfully.");
+        });
+    </script>
+</body>
+</html>
+
